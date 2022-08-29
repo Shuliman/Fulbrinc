@@ -1,0 +1,38 @@
+/.idea
+/.vscode
+/.vagrant
+/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+# ---> Laravel
+node_modules/
+npm-debug.log
+yarn-error.log
+storage/
+vendor/
+# Laravel 4 specific
+bootstrap/compiled.php
+app/storage/
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+Homestead.yaml
+Homestead.json
+.phpunit.result.cache
+npm-debug.log
+yarn-error.log
+# ---> Vue
+# gitignore template for Vue.js projects
+#
+# Recommended template: Node.gitignore
+# TODO: where does this rule come from?
+docs/_book
+# TODO: where does this rule come from?
+test/
+
+
