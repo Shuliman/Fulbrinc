@@ -65,7 +65,7 @@
 
           <!-- Submit Button -->
           <div class="form-group">
-            <button class="btn btn-primary btn-block" :disabled="v$.form.$invalid" >
+            <button class="btn btn-primary btn-block" :disabled="v$.form.$invalid" v-on:click="sendCreds" >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
@@ -90,6 +90,8 @@
 import { Form, Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import axios from 'axios'
+const REGISTRATION_API_URL = 'http://127.0.0.1:8080/api/register';
 
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
@@ -112,11 +114,6 @@ export default {
 
   data() {
     return {
-      creds: {
-        login:'',
-        email: '',
-        password:'',
-      },
       form: {
         Username: '',
         email: '',
@@ -124,6 +121,10 @@ export default {
         confirmPassword: '',
       },
     };
+  },
+
+  mounted() {
+    
   },
 
 validations() {
@@ -144,7 +145,15 @@ validations() {
   },
 
   methods: {
-
+    sendCreds(){
+      axios
+    .post(REGISTRATION_API_URL, {
+      name: this.form.Username,
+      email: this.form.email,
+      password: this.form.password
+    })
+    .then((response) => console.log(response))
+    }
   },
 };
 </script>
