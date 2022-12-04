@@ -8,7 +8,6 @@
         src="../assets/avatar_2x.png"
         class="profile-img-card"
       />
-      <Form @submit="handleLogin" :validation-schema="schema">
           <!-- Email -->
         <div class="form-group" :class="{ error: v$.form.email.$errors.length }">
           <label for="">Email</label>
@@ -19,6 +18,7 @@
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
+        <!-- Password -->
         <div class="form-group" :class="{ error: v$.form.password.$errors.length }">
           <label for="">Password</label>
           <Field name="password" type="password" v-model="v$.form.password.$model" placeholder="********" class="form-control" />
@@ -30,26 +30,26 @@
 
           <!-- Submit Button -->
         <div class="form-group">
-          <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block">Login</button>
+          <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block" v-on:click="sendCreds" >Login</button>
         </div>
-      </Form>
     </div>
   </div>
 </template>
 <script>
-import { Form, Field } from "vee-validate";
+import {Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8080/api';
 
 export default {
 
   name: "LoginUser",
   components: {
-    Form,
     Field,
   },
 
-  setup () {
+  setup() {
     return { v$: useVuelidate() }
   },
   
@@ -77,6 +77,14 @@ export default {
   },
 
   methods: {
+    sendCreds(){
+          axios
+            .post(API_URL + '/login', {
+              email: this.$data.form.email,
+              password: this.$data.form.password
+            })
+            .then((response) => console.log(response))
+      }
   },
 
 };

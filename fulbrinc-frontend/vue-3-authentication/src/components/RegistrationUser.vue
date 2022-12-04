@@ -91,7 +91,7 @@ import { Form, Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 import axios from 'axios'
-const REGISTRATION_API_URL = 'http://127.0.0.1:8080/api/register';
+const API_URL = 'http://127.0.0.1:8080/api';
 
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
@@ -147,7 +147,7 @@ validations() {
   methods: {
     sendCreds(){
       axios
-    .post(REGISTRATION_API_URL, {
+    .post(API_URL + '/register', {
       name: this.form.Username,
       email: this.form.email,
       password: this.form.password
