@@ -147,18 +147,18 @@ validations() {
   methods: {
     sendCreds(){
       axios
-    .post(API_URL + '/register', {
-      name: this.form.Username,
-      email: this.form.email,
-      password: this.form.password
-    })
-    .then((response) => console.log(response))
+        .post(API_URL + '/register', {
+          name: this.form.Username,
+          email: this.form.email,
+          password: this.form.password
+        })
+        .then((response) => console.log(response))
     }
   },
 };
 </script>
 <style scoped>
-.card-container {
+  .card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,8 +167,9 @@ validations() {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     padding: 20px;
+    margin: 20px;
   }
-
+  
   #profile-img {
     border-radius: 50%;
     background-color: #00bcd4;
@@ -191,5 +192,13 @@ validations() {
     background-color: #333333;
     color: #00bcd4;
     font-size: 16px;
+  }
+  .btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
   }
 </style>

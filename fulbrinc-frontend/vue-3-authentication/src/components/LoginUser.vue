@@ -83,14 +83,18 @@ export default {
               email: this.$data.form.email,
               password: this.$data.form.password
             })
-            .then((response) => console.log(response))
+            .then((response) => {
+              // saving token into localStorage
+              localStorage.setItem('accessToken', response.data.token);
+              console.log(response);
+            });
       }
   },
 
 };
 </script>
 <style scoped>
-.card-container {
+  .card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,6 +103,8 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     padding: 20px;
+    margin: 20px;
+
   }
 
   #profile-img {
@@ -123,5 +129,13 @@ export default {
     background-color: #333333;
     color: #00bcd4;
     font-size: 16px;
+  }
+  .btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
   }
 </style>

@@ -6,6 +6,7 @@ import UserProfile from "./components/UserProfile.vue";
 import BoardAdmin from "./components/BoardAdmin.vue";
 import BoardModerator from "./components/BoardModerator.vue";
 import BoardUser from "./components/BoardUser.vue";
+import BookmarkManager from "./components/BookmarkManager.vue";
 
 const routes = [{
         path: "/",
@@ -18,10 +19,17 @@ const routes = [{
     },
     {
         path: "/login",
+        name: "login",
         component: LoginUser,
     },
     {
+        path: "/bookmarks",
+        name: "bookmarks",
+        component: BookmarkManager,
+    },
+    {
         path: "/register",
+        name: "register",
         component: RegistrationUser,
     },
     {
