@@ -65,7 +65,7 @@
 
           <!-- Submit Button -->
           <div class="form-group">
-            <button class="btn btn-primary btn-block" :disabled="v$.form.$invalid" >
+            <button class="btn btn-primary btn-block" :disabled="v$.form.$invalid" v-on:click="sendCreds" >
               <span
                 v-show="loading"
                 class="spinner-border spinner-border-sm"
@@ -90,6 +90,8 @@
 import { Form, Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8080/api';
 
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
@@ -112,11 +114,6 @@ export default {
 
   data() {
     return {
-      creds: {
-        login:'',
-        email: '',
-        password:'',
-      },
       form: {
         Username: '',
         email: '',
@@ -124,6 +121,10 @@ export default {
         confirmPassword: '',
       },
     };
+  },
+
+  mounted() {
+    
   },
 
 validations() {
@@ -144,9 +145,63 @@ validations() {
   },
 
   methods: {
-
+    sendCreds(){
+      axios
+        .post(API_URL + '/register', {
+          name: this.form.Username,
+          email: this.form.email,
+          password: this.form.password
+        })
+        .then((response) => console.log(response))
+    }
   },
 };
 </script>
 <style scoped>
+  body {
+    background-color: #000;
+  }
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1d1d1d;
+    border: 2px solid #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  #profile-img {
+    border-radius: 50%;
+    background-color: #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    width: 80%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #00bcd4;
+    font-size: 16px;
+  }
+  .btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+  }
 </style>

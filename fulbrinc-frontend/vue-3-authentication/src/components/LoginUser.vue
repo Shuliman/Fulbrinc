@@ -8,7 +8,6 @@
         src="../assets/avatar_2x.png"
         class="profile-img-card"
       />
-      <Form @submit="handleLogin" :validation-schema="schema">
           <!-- Email -->
         <div class="form-group" :class="{ error: v$.form.email.$errors.length }">
           <label for="">Email</label>
@@ -19,6 +18,7 @@
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
+        <!-- Password -->
         <div class="form-group" :class="{ error: v$.form.password.$errors.length }">
           <label for="">Password</label>
           <Field name="password" type="password" v-model="v$.form.password.$model" placeholder="********" class="form-control" />
@@ -30,26 +30,26 @@
 
           <!-- Submit Button -->
         <div class="form-group">
-          <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block">Login</button>
+          <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block" v-on:click="sendCreds" >Login</button>
         </div>
-      </Form>
     </div>
   </div>
 </template>
 <script>
-import { Form, Field } from "vee-validate";
+import {Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import axios from 'axios'
+const API_URL = 'http://127.0.0.1:8080/api';
 
 export default {
 
   name: "LoginUser",
   components: {
-    Form,
     Field,
   },
 
-  setup () {
+  setup() {
     return { v$: useVuelidate() }
   },
   
@@ -77,9 +77,65 @@ export default {
   },
 
   methods: {
+    sendCreds(){
+          axios
+            .post(API_URL + '/login', {
+              email: this.$data.form.email,
+              password: this.$data.form.password
+            })
+            .then((response) => {
+              // saving token into localStorage
+              localStorage.setItem('accessToken', response.data.token);
+              console.log(response);
+            });
+      }
   },
 
 };
 </script>
 <style scoped>
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1d1d1d;
+    border: 2px solid #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+
+  }
+
+  #profile-img {
+    border-radius: 50%;
+    background-color: #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    width: 80%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #00bcd4;
+    font-size: 16px;
+  }
+  .btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+  }
 </style>
