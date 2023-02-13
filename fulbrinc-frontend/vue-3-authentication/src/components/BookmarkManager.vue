@@ -8,7 +8,16 @@
           <li v-for="bookmark in bookmarks" :key="bookmark.id">
            <p>{{ bookmark.title}}</p>
             <h3>{{ bookmark.description}}</h3>
-            <button @click="deleteBookmark(bookmark.id)">Delete</button>
+            <button @click="removeBookmark(bookmark.id)">Delete</button>
+            <button @click="showEditPopup = true">Edit bookmark
+              <edit-bookmark
+                v-if="showEditPopup"
+                :bookmark="editBookmark"
+                @close="showEditPopup = false"
+                @save="saveBookmark"
+              ></edit-bookmark>
+          </button>
+
           </li>
         </ul>
       </div>
@@ -35,6 +44,8 @@
 
 <script>
 import axios from 'axios';
+import EditBookmark from './UI/EditBookmark.vue';
+
 
 const API_URL = 'http://127.0.0.1:8080/api';
 const accessToken = localStorage.getItem('accessToken'); //getting access token from localStorage
@@ -43,16 +54,19 @@ export default {
   name: "BookmarkManager",
   data() {
     return {
-      user: {
-        user_id: 69,
-      },
+      showEditPopup: false,
       bookmarks: [],
       newBookmark: {
         title: "",
         description: ""
-      }
+      },
+      editBookmarkData: {},
     };
   },
+
+  components: {
+      EditBookmark,
+    },
 
   created() {
     this.fetchBookmarks();
@@ -78,16 +92,13 @@ export default {
     try {
       const accessToken = localStorage.getItem('accessToken');
 
-      const response = await axios.post(API_URL + '/posts', {
-        title: this.newBookmark.title,
-        description: this.newBookmark.description
-      }, {
+      const response = await axios.post(API_URL + '/posts', this.newBookmark, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + accessToken,
         },
       });
-
+      this.newBookmark = { title: '', description: '' };
       console.log(response);
       this.fetchBookmarks();
     } catch (error) {
@@ -98,12 +109,36 @@ export default {
 
     async removeBookmark(id) {
       try {
-        await axios.delete(API_URL + `/posts/${id}`);
+        await axios.delete(API_URL + `/posts/${id}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        });
         this.fetchBookmarks();
       } catch (error) {
         console.error(error);
       }
     },
+
+
+  async editBookmark(id) {
+        try {
+          const response = await axios.patch(API_URL + `/posts/${id}`, {
+            headers: {
+              Accept: 'application/json',
+              Authorization: 'Bearer ' + accessToken,
+            },
+          });
+          this.editBookmarkData = response.data.data;
+          this.showEditPopup = true;
+          this.fetchBookmarks();
+        } catch (error) {
+      console.error(error);
+    }
+  },
+
 
   }
 

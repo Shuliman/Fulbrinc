@@ -158,9 +158,6 @@ validations() {
 };
 </script>
 <style scoped>
-  body {
-    background-color: #000;
-  }
   .card-container {
     display: flex;
     flex-direction: column;

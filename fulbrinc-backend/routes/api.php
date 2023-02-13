@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserSettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ Route::post('login', [PassportAuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::resource('posts', PostController::class);
 });
+Route::put('/settings', [UserSettingsController::class, 'update'])->middleware('auth:api');
+Route::get('/settings', [UserSettingsController::class, 'index'])->middleware('auth:api');
