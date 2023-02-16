@@ -38,6 +38,6 @@ class MatchOldPassword implements Rule
      */
     public function message()
     {
-        return 'The :attribute is incorrect.';
+        return 'The attribute is incorrect.';
     }
 }

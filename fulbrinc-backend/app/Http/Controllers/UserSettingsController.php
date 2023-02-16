@@ -33,10 +33,11 @@ class UserSettingsController extends Controller
         ]);
 
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
 
         return response()->json(['message' => 'Settings updated successfully']);
     }
