@@ -83,11 +83,59 @@ export default {
               email: this.$data.form.email,
               password: this.$data.form.password
             })
-            .then((response) => console.log(response))
+            .then((response) => {
+              // saving token into localStorage
+              localStorage.setItem('accessToken', response.data.token);
+              console.log(response);
+            });
       }
   },
 
 };
 </script>
 <style scoped>
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1d1d1d;
+    border: 2px solid #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+
+  }
+
+  #profile-img {
+    border-radius: 50%;
+    background-color: #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-control {
+    width: 80%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #00bcd4;
+    font-size: 16px;
+  }
+  .btn-primary {
+    background-color: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+  }
 </style>

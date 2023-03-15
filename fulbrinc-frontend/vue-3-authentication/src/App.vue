@@ -76,3 +76,51 @@ export default {
   }
 };
 </script>
+<style>
+  #app {
+    padding-bottom: 20px;
+    background-color: #1d1d1d;
+  }
+
+
+  .navbar {
+    background-color: #1d1d1d;
+    border-bottom: 2px solid #00bcd4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-link {
+    color: #00bcd4;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .nav-link:hover {
+    color: #ffffff;
+  }
+
+  .navbar-brand {
+    color: #00bcd4;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .container {
+    background-color: #1d1d1d;
+    color: #00bcd4;
+  }
+
+  .btn {
+    background-color: #00bcd4;
+    color: #ffffff;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .btn:hover {
+    background-color: #ffffff;
+    color: #00bcd4;
+    border: 2px solid #00bcd4;
+  }
+</style>
