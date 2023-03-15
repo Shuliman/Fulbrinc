@@ -31,11 +31,14 @@
           <!-- Submit Button -->
         <div class="form-group">
           <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block" v-on:click="sendCreds" >Login</button>
+          <AuthStatus v-if="showAuthStatusModal" :message="authStatusMessage" @close="onAuthStatusModalClose" />
+
         </div>
     </div>
   </div>
 </template>
 <script>
+import AuthStatus from "@/components/UI/AuthStatus.vue";
 import {Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
@@ -47,6 +50,7 @@ export default {
   name: "LoginUser",
   components: {
     Field,
+    AuthStatus,
   },
 
   setup() {
@@ -56,9 +60,11 @@ export default {
   data() {
     return {
       form: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       },
+      showAuthStatusModal: false,
+      authStatusMessage: "",
     };
   },
 
@@ -77,18 +83,31 @@ export default {
   },
 
   methods: {
-    sendCreds(){
-          axios
-            .post(API_URL + '/login', {
-              email: this.$data.form.email,
-              password: this.$data.form.password
-            })
-            .then((response) => {
-              // saving token into localStorage
-              localStorage.setItem('accessToken', response.data.token);
-              console.log(response);
-            });
-      }
+    sendCreds() {
+      axios
+        .post(API_URL + "/login", {
+          email: this.$data.form.email,
+          password: this.$data.form.password,
+        })
+        .then((response) => {
+          // saving token into localStorage
+          localStorage.setItem("accessToken", response.data.token);
+          console.log(response);
+
+          this.showAuthStatusModal = true;
+          this.authStatusMessage = "Login successful!";
+        })
+        .catch((error) => {
+          console.error(error);
+
+          this.showAuthStatusModal = true;
+          this.authStatusMessage = "Login failed. Please try again.";
+        });
+    },
+    onAuthStatusModalClose() {
+      this.showAuthStatusModal = false;
+      this.authStatusMessage = "";
+    },
   },
 
 };
