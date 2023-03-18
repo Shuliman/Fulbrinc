@@ -1,13 +1,11 @@
 <template>
     <div class="modal" :class="{ 'is-active': showModal }">
-      <div class="modal-background"></div>
+      <div class="modal-background" ></div>
       <div class="modal-content">
-        <div class="box">
-          <p>{{ message }}</p>
-          <button class="btn-primary" @click="closeModal">Close</button>
+        <div class="box" @click="closeModal">
+          <p>{{ message }} </p>
         </div>
       </div>
-      <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
     </div>
   </template>
   
