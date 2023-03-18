@@ -72,6 +72,7 @@
               ></span>
               Sign Up
             </button>
+            <AuthStatus v-if="showAuthStatusModal" :message="authStatusMessage" @close="onAuthStatusModalClose" />
           </div>
         </div>
       
@@ -87,6 +88,7 @@
   </div>
 </template>
 <script>
+import AuthStatus from "@/components/UI/AuthStatus.vue";
 import { Form, Field } from "vee-validate";
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
@@ -106,6 +108,7 @@ export default {
   components: {
     Form,
     Field,
+    AuthStatus,
   },   
 
   setup () {
@@ -120,6 +123,8 @@ export default {
         password: '',
         confirmPassword: '',
       },
+      showAuthStatusModal: false,
+      authStatusMessage: "",
     };
   },
 
@@ -152,9 +157,24 @@ validations() {
           email: this.form.email,
           password: this.form.password
         })
-        .then((response) => console.log(response))
-    }
+        .then((response) => {
+          this.showAuthStatusModal = true;
+          this.authStatusMessage = "Registration successful!";
+          console.log(response)
+        })
+        .catch((error) => {
+          console.error(error);
+
+          this.showAuthStatusModal = true;
+          this.authStatusMessage = "Registration failed. Please try again.";
+        });
+    },
+    onAuthStatusModalClose() {
+      this.showAuthStatusModal = false;
+      this.authStatusMessage = "";
+    },
   },
+
 };
 </script>
 <style scoped>

@@ -32,7 +32,6 @@
         <div class="form-group">
           <button :disabled="v$.form.$invalid" class="btn btn-primary btn-block" v-on:click="sendCreds" >Login</button>
           <AuthStatus v-if="showAuthStatusModal" :message="authStatusMessage" @close="onAuthStatusModalClose" />
-
         </div>
     </div>
   </div>
