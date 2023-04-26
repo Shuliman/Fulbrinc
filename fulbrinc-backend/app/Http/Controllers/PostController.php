@@ -24,14 +24,14 @@ class PostController extends Controller
         if (!$post) {
             return response()->json([
                 'success' => false,
-                'message' => 'Post not found '
-            ], 400);
+                'message' => 'Post not found'
+            ], 404);
         }
 
         return response()->json([
             'success' => true,
             'data' => $post->toArray()
-        ], 400);
+        ], 200);
     }
 
     public function store(Request $request)
@@ -49,12 +49,12 @@ class PostController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $post->toArray()
-            ]);
+            ],201);
         else
             return response()->json([
                 'success' => false,
                 'message' => 'Post not added'
-            ], 500);
+            ], 400);
     }
 
     public function update(Request $request, $id)
@@ -65,7 +65,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Post not found'
-            ], 400);
+            ], 404);
         }
 
         $updated = $post->fill($request->all())->save();
@@ -78,7 +78,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Post can not be updated'
-            ], 500);
+            ], 400);
     }
 
     public function destroy($id)
@@ -89,7 +89,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Post not found'
-            ], 400);
+            ], 404);
         }
 
         if ($post->delete()) {
@@ -100,7 +100,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Post can not be deleted'
-            ], 500);
+            ], 400);
         }
     }
 }
