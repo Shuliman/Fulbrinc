@@ -17,8 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api'])->group(function () {
     Route::resource('posts', PostController::class);
+
+    Route::prefix('settings')->group(function () {
+        Route::put('/', [UserSettingsController::class, 'update']);
+        Route::get('/', [UserSettingsController::class, 'index']);
+    });
 });
-Route::put('/settings', [UserSettingsController::class, 'update'])->middleware('auth:api');
-Route::get('/settings', [UserSettingsController::class, 'index'])->middleware('auth:api');
