@@ -123,25 +123,22 @@ export default {
     },
 
 
-  async editBookmark(id) {
-        try {
-          const response = await axios.patch(API_URL + `/posts/${id}`, {
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + accessToken,
-            },
-          });
-          this.editBookmarkData = response.data.data;
-          this.showEditPopup = true;
-          this.fetchBookmarks();
-        } catch (error) {
-      console.error(error);
-    }
-  },
-
-
+    async editBookmark(id) {
+          try {
+            const response = await axios.patch(API_URL + `/posts/${id}`, {
+              headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + accessToken,
+              },
+            });
+            this.editBookmarkData = response.data.data;
+            this.showEditPopup = true;
+            this.fetchBookmarks();
+          } catch (error) {
+        console.error(error);
+      }
+    },
   }
-
 };
 </script>
   
