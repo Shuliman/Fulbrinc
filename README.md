@@ -1,11 +1,4 @@
 ### fulbrinc
 
-This is a bookmark manager created with laravel and vue.js.
-Application orginized in two seperated parts: front-end server and back-end server.
-
-##### Features
-- Front - and back-end servers (done)
-- Authentication (in progress)
-- CRUD for users and bookmarks
-- Store bookmarks in encrypted form on server
-
+Fulbrinc is a web application that allows you to easily manage your bookmarks. It is built with Laravel and Vue.js and consists of two separate parts: 
+a front-end server and a back-end server.
