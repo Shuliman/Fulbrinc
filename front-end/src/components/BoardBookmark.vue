@@ -1,6 +1,6 @@
 <template>
   <div class="bookmarks-manager">
-    <h1>Users Board</h1>
+    <h1>Bookmarks Board</h1>
 
     <div class="bookmarks-list">
       <h2>Bookmarks list</h2>
@@ -51,7 +51,7 @@ const API_URL = 'http://127.0.0.1:8080/api';
 const accessToken = localStorage.getItem('accessToken'); //getting access token from localStorage
 
 export default {
-name: "BoardUser",
+name: "BoardBookmark",
 data() {
   return {
     showEditPopup: false,

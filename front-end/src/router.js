@@ -5,8 +5,7 @@ import RegistrationUser from "./components/RegistrationUser.vue";
 import UserProfile from "./components/UserProfile.vue";
 import BoardAdmin from "./components/BoardAdmin.vue";
 import BoardModerator from "./components/BoardModerator.vue";
-import BoardUser from "./components/BoardUser.vue";
-import BookmarkManager from "./components/BookmarkManager.vue";
+import BoardBookmark from "./components/BoardBookmark.vue";
 
 const routes = [{
         path: "/",
@@ -25,7 +24,7 @@ const routes = [{
     {
         path: "/bookmarks",
         name: "bookmarks",
-        component: BookmarkManager,
+        component: BoardBookmark,
     },
     {
         path: "/register",
@@ -47,11 +46,7 @@ const routes = [{
         name: "moderator",
         component: BoardModerator,
     },
-    {
-        path: "/user",
-        name: "user",
-        component: BoardUser,
-    },
+
 ];
 const router = createRouter({
     history: createWebHistory(),
