@@ -46,7 +46,6 @@ const routes = [{
         name: "moderator",
         component: BoardModerator,
     },
-
 ];
 const router = createRouter({
     history: createWebHistory(),
