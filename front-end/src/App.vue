@@ -4,8 +4,8 @@
       <a href="/" class="navbar-brand">fulbrinc</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" /> Home
+          <router-link to="/Bookmarks" class="nav-link">
+            <font-awesome-icon icon="home" /> Bookmarks
           </router-link>
         </li>
         <li v-if="showAdminBoard" class="nav-item">

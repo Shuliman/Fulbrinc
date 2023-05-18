@@ -6,16 +6,16 @@
   </div>
 </template>
 <script>
-import UserService from "../services/user.service";
+//import UserService from "../services/user.service";
 export default {
-  name: "BoardUser",
+  name: "BoardAdmin",
   data() {
     return {
       content: "",
     };
   },
   mounted() {
-    UserService.getUserBoard().then(
+    /*UserService.getAdminBoard().then(
       (response) => {
         this.content = response.data;
       },
@@ -27,7 +27,8 @@ export default {
           error.message ||
           error.toString();
       }
-    );
+    );*/
+    this.content = "This is the admin board";
   },
 };
 </script>
