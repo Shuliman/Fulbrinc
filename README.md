@@ -5,7 +5,7 @@ Fulbrinc is a web application that allows you to easily manage your bookmarks.
 ## Install Guide 
 git clone https://github.com/Shuliman/Fulbrinc.git
 
-### Back-end
+### Back-end:
 	`install php,composer`
 
 	run `composer update`
