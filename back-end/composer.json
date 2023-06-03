@@ -47,6 +47,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "lint": [
+            "phpstan --memory-limit=1G analyse /home/me/projects/Fulbrinc/back-end"
         ]
     },
     "extra": {
