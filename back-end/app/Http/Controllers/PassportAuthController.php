@@ -22,6 +22,7 @@ class PassportAuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'is_admin' => User::count() === 0 ? true: false, //assign first user as admin
         ]);
 
         $token = $user->createToken('LaravelAuthApp')->accessToken;
