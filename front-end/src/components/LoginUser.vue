@@ -75,7 +75,7 @@ export default {
         },
         password: {
             required, 
-            min: minLength(6)
+            min: minLength(8)
         },
       },
     }

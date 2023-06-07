@@ -143,7 +143,7 @@ validations() {
         },
         
         email: { required, email },
-        password: { required, min: minLength(6) },
+        password: { required, min: minLength(8) },
         confirmPassword: { required }
       },
     }
