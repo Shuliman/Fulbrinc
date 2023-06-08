@@ -43,9 +43,10 @@ class AdminController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
 
     /**
