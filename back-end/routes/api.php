@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserSettingsController;
@@ -25,3 +26,4 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/', [UserSettingsController::class, 'index']);
     });
 });
+Route::resource('admin', AdminController::class);
