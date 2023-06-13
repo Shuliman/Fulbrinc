@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Illuminate\Http\Response;
 
 class IsAdmin
 {
@@ -16,10 +17,14 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->is_admin == 1) {
-             return $next($request);
+        if (Auth::guard('api')->check() && Auth::guard('api')->user()->is_admin == 1) {
+            return $next($request);
         }
 
-        return redirect('home')->with('error','You have not admin access');
+        
+        return response()->json([
+            'error' => 'You do not have admin access'
+        ], Response::HTTP_UNAUTHORIZED);
+
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserSettingsController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,4 +27,6 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/', [UserSettingsController::class, 'index']);
     });
 });
-Route::resource('admin', AdminController::class);
+Route::group(['middleware' => [ 'admin']], function () {
+    Route::resource('admin', AdminController::class);
+});

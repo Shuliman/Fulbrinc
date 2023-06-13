@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
 class AdminController extends Controller
 {
     /**
@@ -85,16 +86,9 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-
-        if ($user->delete()) {
-            return response()->json([
-                'success' => true
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'User can not be deleted'
-            ], 400);
-        }
+        $user->delete();
+        return response()->json([
+            'success' => true
+        ]);
     }
 }
