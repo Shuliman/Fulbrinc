@@ -17,7 +17,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('api')->check() && Auth::guard('api')->user()->is_admin == 1) {
+        if (Auth::check() && Auth::user()->is_admin == 1) {
             return $next($request);
         }
 
