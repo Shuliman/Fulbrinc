@@ -21,6 +21,8 @@ git clone https://github.com/Shuliman/Fulbrinc.git
 
 make migrations:
 	`php artisan migrate`
+**[Attention]After ever migration re-install passport:
+	`php artisan passport:install`
 	
 generate keys:
 	`php artisan passport:keys`
