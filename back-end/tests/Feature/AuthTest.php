@@ -39,7 +39,7 @@ class AuthTest extends TestCase
     }
     public function test_authorisation ()
     {
-        $user = User::create([
+        User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => bcrypt($this->pass),
