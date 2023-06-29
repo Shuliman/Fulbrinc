@@ -52,4 +52,37 @@ class AuthTest extends TestCase
         $this->assertEquals(200,$response->status());
 
     }
+    public function test_invalid_login()
+    {
+        $response = $this->post('/api/login',[
+        'email' => $this->faker->email,
+        'password' => $this->pass,
+        ]);
+        $this->assertEquals(401, $response->status());
+    }
+
+  public function test_invalid_password()
+  {
+    User::create([
+      'name' => $this->name,
+      'email' => $this->email,
+      'password' => bcrypt($this->pass),
+    ]);
+
+    $response = $this->post('/api/login',[
+      'email' => $this->email,
+      'password' => $this->faker->password, //using two different passwords
+    ]);
+    $this->assertEquals(401, $response->status());
+  }
+
+  public function test_invalid_email()
+  {
+    $response = $this->post('/api/register',[
+      'name' => $this->name,
+      'email' => 'invalid email',
+      'password' => $this->pass,
+    ]);
+    $this->assertEquals(400, $response->status());
+  }
 }
