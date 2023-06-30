@@ -4,12 +4,13 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use App\Models\User;
 
 class AuthTest extends TestCase
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     private $user;
     private $faker;
@@ -20,6 +21,8 @@ class AuthTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Artisan::call('passport:install');
 
         $this->user = User::factory()->create();
         $this->faker = Faker::create();

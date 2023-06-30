@@ -9,6 +9,7 @@ use App\Models\Post;
 
 class PostsTest extends TestCase
 {
+    use RefreshDatabase;
     private $user;
 
     protected function setUp(): void
