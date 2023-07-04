@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('register', [PassportAuthController::class, 'register']);
-Route::post('login', [PassportAuthController::class, 'login']);
+Route::post('register', [PassportAuthController::class, 'register'])->name('register');
+Route::post('login', [PassportAuthController::class, 'login'])->name('login');
 Route::middleware(['auth:api'])->group(function () {
     Route::resource('posts', PostController::class);
 
     Route::prefix('settings')->group(function () {
-        Route::put('/', [UserSettingsController::class, 'update']);
-        Route::get('/', [UserSettingsController::class, 'index']);
+        Route::put('/', [UserSettingsController::class, 'update'])->name('settings.update');
+        Route::get('/', [UserSettingsController::class, 'index'])->name('settings.index');
     });
 });
 Route::group(['middleware' => [ 'admin']], function () {
