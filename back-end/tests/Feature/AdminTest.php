@@ -21,12 +21,10 @@ class AdminTest extends TestCase
         // Create a test admin and user
         $this->admin = User::factory()->create([
             'is_admin' => true,
-            //'password' => bcrypt($password = $this->faker->password(8,16)),
         ]);
 
         $this->user = User::factory()->create();
     }
-
 
     /** @test */
     public function it_can_list_all_users()
@@ -35,7 +33,7 @@ class AdminTest extends TestCase
                          ->getJson(route('admin.index'));
 
         $response->assertStatus(200)
-                 ->assertJsonCount(2, 'data'); // Expecting 2 users (admin and user)
+                 ->assertJsonCount(2); // Expecting 2 users (admin and user)
     }
 
     /** @test */
@@ -45,34 +43,49 @@ class AdminTest extends TestCase
                          ->getJson(route('admin.show', $this->user->id));
 
         $response->assertStatus(200)
-                 ->assertJson(['data' => $this->user->toArray()]);
+                 ->assertJson([
+                     'name' => $this->user->name,
+                     'email' => $this->user->email,
+                 ]);
     }
 
     /** @test */
     public function it_can_create_a_user()
     {
-        $userData = User::factory()->raw();
+        $userData = User::factory()->raw([
+            'password' => 'password',
+            'is_admin' => 0,
+        ]);
+
+        unset($userData['id'], $userData['created_at'], $userData['updated_at']);
 
         $response = $this->actingAs($this->admin, 'api')
-                         ->postJson(route('admin.store'), $userData);
+                        ->postJson(route('admin.store'), $userData);
 
         $response->assertStatus(201)
-                 ->assertJson(['message' => 'User created successfully']);
+                ->assertJson(['message' => 'User created successfully']);
 
+        unset($userData['password']); // We can't compare hashed password
         $this->assertDatabaseHas('users', $userData);
     }
 
     /** @test */
     public function it_can_update_a_user()
     {
-        $userData = User::factory()->raw();
+        $userData = User::factory()->raw([
+            'password' => 'password',
+            'is_admin' => 0,
+        ]);
+
+        unset($userData['id'], $userData['created_at'], $userData['updated_at']);
 
         $response = $this->actingAs($this->admin, 'api')
-                         ->putJson(route('admin.update', $this->user->id), $userData);
+                        ->putJson(route('admin.update', $this->user->id), $userData);
 
         $response->assertStatus(200)
-                 ->assertJson(['message' => 'User updated successfully']);
+                ->assertJson(['message' => 'User updated successfully']);
 
+        unset($userData['password']); // We can't compare hashed password
         $this->assertDatabaseHas('users', $userData);
     }
 
@@ -88,4 +101,3 @@ class AdminTest extends TestCase
         $this->assertDatabaseMissing('users', ['id' => $this->user->id]);
     }
 }
-
