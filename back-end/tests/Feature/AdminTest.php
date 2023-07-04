@@ -57,7 +57,7 @@ class AdminTest extends TestCase
             'is_admin' => 0,
         ]);
 
-        unset($userData['id'], $userData['created_at'], $userData['updated_at']);
+        unset($userData['id'], $userData['created_at'], $userData['updated_at'], $userData['remember_token']);
 
         $response = $this->actingAs($this->admin, 'api')
                         ->postJson(route('admin.store'), $userData);
@@ -77,7 +77,7 @@ class AdminTest extends TestCase
             'is_admin' => 0,
         ]);
 
-        unset($userData['id'], $userData['created_at'], $userData['updated_at']);
+        unset($userData['id'], $userData['created_at'], $userData['updated_at'], $userData['remember_token']);
 
         $response = $this->actingAs($this->admin, 'api')
                         ->putJson(route('admin.update', $this->user->id), $userData);
@@ -88,6 +88,7 @@ class AdminTest extends TestCase
         unset($userData['password']); // We can't compare hashed password
         $this->assertDatabaseHas('users', $userData);
     }
+
 
     /** @test */
     public function it_can_delete_a_user()
