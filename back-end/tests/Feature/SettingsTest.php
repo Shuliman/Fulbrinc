@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserSettingsControllerTest extends TestCase
+class SettingsTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -26,7 +26,7 @@ class UserSettingsControllerTest extends TestCase
         ]);
     }
 
-    public function it_can_retrieve_user_settings()
+    public function test_it_can_retrieve_user_settings()
     {
         $response = $this->actingAs($this->user, 'api')
             ->getJson(route('settings.index'));
@@ -39,7 +39,7 @@ class UserSettingsControllerTest extends TestCase
     }
 
 
-    public function it_can_update_user_settings()
+    public function test_it_can_update_user_settings()
     {
         $newName = $this->faker->name;
         $newEmail = $this->faker->unique()->safeEmail;
@@ -65,7 +65,7 @@ class UserSettingsControllerTest extends TestCase
         $this->assertTrue(Hash::check($newPassword, $this->user->fresh()->password));
     }
 
-    public function it_cannot_update_user_settings_with_invalid_name()
+    public function test_it_cannot_update_user_settings_with_invalid_name()
     {
         $response = $this->actingAs($this->user, 'api')
             ->putJson(route('settings.update'), [
@@ -78,7 +78,7 @@ class UserSettingsControllerTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function it_cannot_update_user_settings_with_invalid_email()
+    public function test_it_cannot_update_user_settings_with_invalid_email()
     {
         $response = $this->actingAs($this->user, 'api')
             ->putJson(route('settings.update'), [
@@ -91,7 +91,7 @@ class UserSettingsControllerTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function it_cannot_update_user_settings_with_invalid_old_password()
+    public function test_it_cannot_update_user_settings_with_invalid_old_password()
     {
         $response = $this->actingAs($this->user, 'api')
             ->putJson(route('settings.update'), [
@@ -104,7 +104,7 @@ class UserSettingsControllerTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function it_cannot_update_user_settings_with_invalid_new_password()
+    public function test_it_cannot_update_user_settings_with_invalid_new_password()
     {
         $response = $this->actingAs($this->user, 'api')
             ->putJson(route('settings.update'), [
