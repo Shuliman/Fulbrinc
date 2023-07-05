@@ -9,7 +9,7 @@ Postman collection for interaction with API's: [![Run in Postman](https://run.ps
 git clone https://github.com/Shuliman/Fulbrinc.git
 
 ### Back-end:
-1. `install php,composer`
+1. install php and composer
 2. run `composer update`
 3. create `.env` file using `.env.example`
 4. configure your DB
