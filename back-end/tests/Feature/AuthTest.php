@@ -41,7 +41,7 @@ class AuthTest extends TestCase
         $this->assertEquals(200,$response->status());
 
     }
-    public function test_authorisation ()
+    public function test_auth ()
     {
         User::create([
             'name' => $this->name,
@@ -70,7 +70,7 @@ class AuthTest extends TestCase
     {
         $response = $this->post('/api/login',[
             'email' => $this->user->email,
-            'password' => 'wrongpassword', // Используем неверный пароль
+            'password' => 'wrongpassword',
         ]);
         $this->assertEquals(401, $response->status());
     }
