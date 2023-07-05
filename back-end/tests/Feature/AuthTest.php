@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -46,7 +47,7 @@ class AuthTest extends TestCase
         User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'password' => bcrypt($this->pass),
+            'password' => Hash::make($this->pass),
         ]);
 
         $response = $this->post('/api/login',[

@@ -22,7 +22,7 @@ class SettingsTest extends TestCase
         // Create a test user
         $this->password = $this->faker->password(8, 16);
         $this->user = User::factory()->create([
-            'password' => bcrypt($this->password),
+            'password' => Hash::make($this->password),
         ]);
     }
 

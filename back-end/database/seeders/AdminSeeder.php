@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class AdminSeeder extends Seeder
         $this->admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@mail.com',
-            'password' =>  bcrypt('admin123'),
+            'password' =>  Hash::make('admin123'),
             'is_admin' => true,
         ]);
         info('Admin created: ' . $this->admin->id);

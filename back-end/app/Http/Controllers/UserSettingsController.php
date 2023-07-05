@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserSettingsController extends Controller
@@ -36,7 +37,7 @@ class UserSettingsController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json(['message' => 'Settings updated successfully']);
