@@ -53,11 +53,10 @@ class AdminTest extends TestCase
     public function it_can_create_a_user()
     {
         $userData = User::factory()->raw([
-            'password' => 'password',
             'is_admin' => 0,
         ]);
 
-        unset($userData['id'], $userData['created_at'], $userData['updated_at'], $userData['remember_token']);
+        unset($userData['remember_token']);
 
         $response = $this->actingAs($this->admin, 'api')
                         ->postJson(route('admin.store'), $userData);
