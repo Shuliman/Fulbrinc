@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidCredentialsException;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -39,12 +40,13 @@ class PassportAuthController extends Controller
             'password' => $request->password,
         ];
 
-        if (auth()->attempt($data)) {
-            $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
-
-            return response()->json(['token' => $token], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+        if (!auth()->attempt($data)) {
+            throw new InvalidCredentialsException('Unauthorised');
         }
+
+        $token = auth()->user()->createToken('LaravelAuthApp')->accessToken;
+
+        return response()->json(['token' => $token], 200);
     }
+
 }
