@@ -62,8 +62,8 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'name' => 'required|min:4|string|max:255',
+            'email' => 'required|email:rfc|unique:users,email,'.$user->id,
             'password' => 'required|string|min:8',
         ]);
 
