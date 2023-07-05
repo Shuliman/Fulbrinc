@@ -72,11 +72,10 @@ class AdminTest extends TestCase
     public function it_can_update_a_user()
     {
         $userData = User::factory()->raw([
-            'password' => 'password',
             'is_admin' => 0,
         ]);
 
-        unset($userData['id'], $userData['created_at'], $userData['updated_at'], $userData['remember_token']);
+        unset($userData['remember_token']);
 
         $response = $this->actingAs($this->admin, 'api')
                         ->putJson(route('admin.update', $this->user->id), $userData);
@@ -87,7 +86,6 @@ class AdminTest extends TestCase
         unset($userData['password']); // We can't compare hashed password
         $this->assertDatabaseHas('users', $userData);
     }
-
 
     /** @test */
     public function it_can_delete_a_user()
@@ -100,4 +98,51 @@ class AdminTest extends TestCase
 
         $this->assertDatabaseMissing('users', ['id' => $this->user->id]);
     }
+
+    /** @test */
+    public function it_cannot_access_admin_functions_without_authorization()
+    {
+        $response = $this->getJson(route('admin.index'));
+
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_cannot_access_admin_functions_as_regular_user()
+    {
+        $response = $this->actingAs($this->user, 'api')
+                        ->getJson(route('admin.index'));
+
+        $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function it_cannot_update_nonexistent_user()
+    {
+        $userData = User::factory()->raw([
+            'is_admin' => 0,
+        ]);
+
+        unset($userData['remember_token']);
+
+        $nonExistentId = User::max('id') + 1; //Impossible ID in normal situation
+
+        $response = $this->actingAs($this->admin, 'api')
+                        ->putJson(route('admin.update', $nonExistentId), $userData);
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function it_cannot_delete_nonexistent_user()
+    {
+        $nonExistentId = User::max('id') + 1; //Impossible ID in normal situation
+
+        $response = $this->actingAs($this->admin, 'api')
+                        ->deleteJson(route('admin.destroy', $nonExistentId));
+
+        $response->assertStatus(404);
+    }
+
+
 }
