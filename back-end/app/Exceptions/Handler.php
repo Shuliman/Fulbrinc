@@ -51,18 +51,18 @@ class Handler extends ExceptionHandler
         });
     }
     public function render($request, Throwable $exception)
-{
-    if ($exception instanceof ValidationException) {
-        return response()->json(['message' => 'Invalid user data'], 400);
-    }
+    {
+        if ($exception instanceof ValidationException) {
+            return response()->json(['message' => 'Invalid user data'], 400);
+        }
 
-    if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
-        return response()->json([
-            'success' => false,
-            'message' => 'User not found'
-        ], 404);
-    }
+        if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 404);
+        }
 
-    return parent::render($request, $exception);
-}
+        return parent::render($request, $exception);
+    }
 }
