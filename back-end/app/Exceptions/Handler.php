@@ -7,38 +7,10 @@ use Throwable;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * A list of exception types with their corresponding custom log levels.
-     *
-     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
-     */
-    protected $levels = [
-        //
-    ];
-
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array<int, class-string<\Throwable>>
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed to the session on validation exceptions.
-     *
-     * @var array<int, string>
-     */
-    protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-    ];
-
     /**
      * Register the exception handling callbacks for the application.
      *
@@ -50,18 +22,24 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
     public function render($request, Throwable $exception)
     {
         if ($exception instanceof ValidationException) {
-            return response()->json(['message' => 'Invalid user data'], 400);
+            return response()->json(['message' => 'Invalid user data'], Response::HTTP_BAD_REQUEST);
         }
 
         if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
             return response()->json([
                 'success' => false,
                 'message' => 'User not found'
-            ], 404);
+            ], Response::HTTP_NOT_FOUND);
         }
+
+        if ($exception instanceof InvalidCredentialsException) {
+            return response()->json(['error' => $exception->getMessage()], Response::HTTP_UNAUTHORIZED);
+        }
+
 
         return parent::render($request, $exception);
     }
