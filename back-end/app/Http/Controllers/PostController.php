@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NotFound;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class PostController extends Controller
 {
@@ -19,14 +21,8 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = auth()->user()->posts()->find($id);
-
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post not found'
-            ], 404);
-        }
+        if (!$post = auth()->user()->posts()->find($id))
+            throw new NotFound('Post not found');
 
         return response()->json([
             'success' => true,
@@ -45,62 +41,40 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->description = $request->description;
 
-        if (auth()->user()->posts()->save($post))
-            return response()->json([
-                'success' => true,
-                'data' => $post->toArray()
-            ],201);
-        else
-            return response()->json([
-                'success' => false,
-                'message' => 'Post not added'
-            ], 400);
+        if (!auth()->user()->posts()->save($post))
+            throw new BadRequestException('Post not added');
+
+        return response()->json([
+            'success' => true,
+            'data' => $post->toArray()
+        ],201);
     }
 
     public function update(Request $request, $id)
     {
-        $post = auth()->user()->posts()->find($id);
-
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post not found'
-            ], 404);
-        }
+        if (!$post = auth()->user()->posts()->find($id))
+            throw new NotFound('Post not found');
 
         $updated = $post->fill($request->all())->save();
 
-        if ($updated)
-            return response()->json([
-                'success' => true
-            ]);
-        else
-            return response()->json([
-                'success' => false,
-                'message' => 'Post can not be updated'
-            ], 400);
+        if (!$updated)
+            throw new BadRequestException('Post can not be updated');
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     public function destroy($id)
     {
-        $post = auth()->user()->posts()->find($id);
+        if (!$post = auth()->user()->posts()->find($id))
+            throw new NotFound('Post not found');
 
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post not found'
-            ], 404);
-        }
+        if (!$post->delete())
+            throw new BadRequestException('Post can not be deleted');
 
-        if ($post->delete()) {
-            return response()->json([
-                'success' => true
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post can not be deleted'
-            ], 400);
-        }
+        return response()->json([
+            'success' => true
+        ]);
     }
 }
