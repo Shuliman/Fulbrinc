@@ -36,10 +36,6 @@ class Handler extends ExceptionHandler
             ], Response::HTTP_NOT_FOUND);
         }
 
-        if ($exception instanceof InvalidCredentialsException) {
-            return response()->json(['error' => $exception->getMessage()], Response::HTTP_UNAUTHORIZED);
-        }
-
 
         return parent::render($request, $exception);
     }
