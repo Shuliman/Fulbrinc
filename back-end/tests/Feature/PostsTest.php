@@ -11,11 +11,13 @@ class PostsTest extends TestCase
 {
     use RefreshDatabase;
     private $user;
+    private $nonExistentId;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->user = User::factory()->create();
+        $this->nonExistentId = Post::max('id') + 1; //Impossible ID in normal situation
     }
 
     public function test_can_view_all_user_posts()
@@ -84,6 +86,53 @@ class PostsTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson(['success' => true]);
+    }
+
+    public function test_view_non_existent_post()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->get("/api/posts/$this->nonExistentId");
+
+        $response->assertStatus(404);
+        $response->assertJson(['success' => false, 'message' => 'Post not found']);
+    }
+
+    public function test_update_non_existent_post()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $updatedData = [
+            'title' => 'Updated Title',
+            'description' => 'Updated Description'
+        ];
+
+        $response = $this->put("/api/posts/$this->nonExistentId", $updatedData);
+
+        $response->assertStatus(404);
+        $response->assertJson(['success' => false, 'message' => 'Post not found']);
+    }
+    public function test_delete_non_existent_post()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $response = $this->delete("/api/posts/$this->nonExistentId");
+
+        $response->assertStatus(404);
+        $response->assertJson(['success' => false, 'message' => 'Post not found']);
+    }
+    public function test_create_post_with_invalid_data()
+    {
+        $this->actingAs($this->user, 'api');
+
+        $postData = [
+            'title' => '',
+            'description' => ''
+        ];
+
+        $response = $this->post('/api/posts', $postData);
+
+        $response->assertStatus(400);
     }
 
 }
