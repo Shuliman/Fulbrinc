@@ -5,6 +5,7 @@ import UserProfile from "./components/UserProfile.vue";
 import BoardAdmin from "./components/BoardAdmin.vue";
 import BoardModerator from "./components/BoardModerator.vue";
 import BoardBookmark from "./components/BoardBookmark.vue";
+import UserSettings from '@/components/UserSettings.vue'    
 
 const routes = [{
         path: "/login",
@@ -35,6 +36,11 @@ const routes = [{
         path: "/mod",
         name: "moderator",
         component: BoardModerator,
+    },
+    {
+        path: '/settings',
+        name: 'UserSettings',
+        component: UserSettings
     },
 ];
 const router = createRouter({
