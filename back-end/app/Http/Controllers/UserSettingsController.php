@@ -22,7 +22,7 @@ class UserSettingsController extends Controller
         ]);
 
     }
-    //TO DO change x-www-form-urlencoded to form-data
+    
     public function update(Request $request)
     {
         $user = Auth::user();
