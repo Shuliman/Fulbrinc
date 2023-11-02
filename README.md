@@ -12,7 +12,7 @@ git clone https://github.com/Shuliman/Fulbrinc.git
 1. install php and composer
 2. run `composer update`
 3. create `.env` file using `.env.example`
-4. configure your DB
+4. configure your DB (create `laravel` and `laravel_test` DB's)
 5. install DB drivers
 6. make migrations:`php artisan migrate`
 7. **[Attention]After ever migration re-install passport!**:`php artisan passport:install`	
