@@ -10,5 +10,5 @@ This will create an admin user with the following credentials:
 
 Please change these credentials immediately after installation in a production environment.
 
-# Starting the server
-`php artisan serve --port=8080` You can change the port, but need change the port in frontend too
+## Tests
+For running test's, please use the `php artisan test --env=testing` command
