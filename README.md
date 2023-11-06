@@ -13,7 +13,7 @@ Postman collection for interaction with API's: [![Run in Postman](https://run.ps
 3. create `.env` file using `.env.example`
 4. configure your DB (create `laravel` and `laravel_test` DB's)
 5. make migrations:`php artisan migrate` and seed DB `php artisan db:seed`
-6. **[Attention]After ever migration re-install passport!**:`php artisan passport:install`	
+6. **[Attention]After ever full migration re-install passport!**:`php artisan passport:install`	
 7. generate the keys:
 `php artisan passport:keys`
 `php artisan passport:client --personal`
