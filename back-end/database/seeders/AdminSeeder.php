@@ -21,9 +21,9 @@ class AdminSeeder extends Seeder
         info('Running AdminSeeder');
 
         $this->admin = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@mail.com',
-            'password' =>  Hash::make('admin123'),
+            'name' => env('ADMIN_USERNAME'),
+            'email' => env('ADMIN_EMAIL'),
+            'password' =>  Hash::make(env('ADMIN_PASSWORD')),
             'is_admin' => true,
         ]);
         info('Admin created: ' . $this->admin->id);

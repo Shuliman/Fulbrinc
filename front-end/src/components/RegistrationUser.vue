@@ -52,7 +52,7 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="">Confirm Password</label>
-                <input @input="checkPassword()" class="form-control" placeholder="Confirm Password" type="password" v-model="v$.form.confirmPassword.$model">
+                <input class="form-control" placeholder="Confirm Password" type="password" v-model="v$.form.confirmPassword.$model">
                 <!-- Error Message -->
                 <div v-show="v$.form.password.$model !== v$.form.confirmPassword.$model">
                   <h6>
