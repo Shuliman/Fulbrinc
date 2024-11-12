@@ -14,10 +14,11 @@ Postman collection for interaction with API's: [![Run in Postman](https://run.ps
 4. configure your DB (create `laravel` and `laravel_test` DB's)
 5. make migrations:`php artisan migrate` and seed DB `php artisan db:seed`
 6. **[Attention]After ever full migration re-install passport!**:`php artisan passport:install`	
-7. generate the keys:
+7. Clear the config if you stacking with troubles related with auth `php artisan config:clear`  
+8. generate the keys:
 `php artisan passport:keys`
 `php artisan passport:client --personal`
-8. Starting command `php artisan serve --port=8080`
+9. Starting command `php artisan serve --port=8080`
 
 ### Front-End:
 1. run `npm i`
